@@ -1,0 +1,19 @@
+problem statement:- Create a SNS Topic and assign
+
+basic idea:- 1)SNS -simple notification service which helps in rectifying the changes occured in aws infra
+	  2)here Protocol--- here protocol is nothing but the end-point u need to select and you can select
+			email
+			sms
+			http etc 
+ practical:- 1)go to SNS service and select Create topic
+		-------> select Standard
+		------->specify name and create topic
+	2)scroll down where u can see Create Subscription select it and new page will open  
+	      here	-------> u can see ur topics ARN take by it automatically
+		------->Protocol
+			-----> email
+		------->Endpoint
+			------> suraj@gmail.com
+	3)need to confim the subscription 
+		------->go to gmail and confirm subscription
+
