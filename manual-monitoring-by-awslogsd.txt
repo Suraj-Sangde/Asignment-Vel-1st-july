@@ -1,0 +1,42 @@
+problem statement:- Monitor httpd server with the help of cloudwatchlogs
+
+Basic idea:- 1)access_logs ----- a file of httpd web server which describe how application is running
+	  2)Error_log--------a file of httpd web server which describes the errors occured in application
+	  3)awslogsd---- it is a monitoring agent of aws which is use to live monitoring of httpd
+
+Practical:- 1)install httpd and host a file 
+		yum install httpd -y
+		cd /var/www/html
+		vi index.html ------ "This is my webapplication hosted on httpd server"  
+		Open port 80 in security grp
+		service httpd start
+	2)install log agent
+		yum install awslogs -y
+		service awslogsd start
+	3)Create IAM role and attac it to Ec2 instance where application is hosted on httpd and generate the logs with the help of cloudwatchlogs
+		In IAM select Role
+			--->create role
+			---->dont change AWS SERVICE
+			----->select service EC2
+				----->new page will open for mentioning permissions;search for cloudwatchfullaccess and select it
+					-------->on new page mention Name for Role and Create
+	4)goto Ec2 service and select the instance 
+			---->Action
+			   ----->Security
+			       ----->modify IAM role and just select 
+	5)On Cli 
+		copy the access_log files path location
+		vi  /etc/awslogsd/logs/awscli.conf
+			mention here ur current region .... and save file
+		vi  /etc/awslogsd/logs/awslogs.conf
+			update below
+			[any_name]
+			date-time format= %b %d %H %M %s
+			file=/here/paste/the/path
+			buffer_duration=5000
+			log_stream_name=instance-id 
+			initial-position=start-of-file
+			log-group-name=name-of-ur-log-group
+	6)service awslogsd restart
+
+u can see ur logs are generated in cloudwatch automatically at logs........
