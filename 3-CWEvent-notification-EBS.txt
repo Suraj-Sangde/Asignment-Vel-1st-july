@@ -1,0 +1,43 @@
+problem statement :- Sends the Notification when State of EBS volume gets change
+
+basic idea:- *Event----- Event is nothing but any natural or unnatural changes happened in aws 
+                *States of EBS:- attach volume,ceate volume,reattach volume,modify volume,delete volume
+
+practical:-1)Here U need to Create SNS Notification. Go to SNS Notification Service 
+		-------> Create SNS topic
+			------> Create a new topic Name
+			          Email endpoints that will receive the notification
+			          U need to accept the notification from Gmail so it will notify accordingly
+	
+	2)For events we need to create rule first
+	you can see Event and Rules at left side ----> select Rules
+	3)New Page will open for creation of rule
+	   Create Rule
+		------->Give name for Rule and select Rule with an event pattern
+
+	New page will open where u need to configure on which Event what will be the action must be taken by cloudwatch
+	specify rule:- Event source
+			-->select AWS events or EventBridge partner events 
+		    Sample event
+			-->select AWS events
+		    Creation method
+			-->select Use pattern form
+	-----------	now here need to configure Overall Event-------------- 
+			1.Event source------>AWS Services
+			2.AWS service------->Ec2 
+			3.Event Type-------->EBS Volume notification
+			4.Event Type Specification 1--------->All Events (Here you can select granular events as well)
+					
+ 			5.Event Type Specification 2---------->EBS Volume ARN
+			6.New Page will open to Select target For what action must be take
+				here we can select multiple target for individual Event
+				      Select target type
+					------> AWS Service
+				      Select Target
+					-------> Simple Notification Service
+				      Select Topic 
+					--------> our topic name	
+			5.Finallly Review and Create........
+
+
+Here .............. if any event happen like create new volume and attach to instance then it will send the notification through email 
